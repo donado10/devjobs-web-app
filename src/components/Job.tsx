@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { hslToHex } from "@/utils/functions";
+import Link from "next/link";
 
 interface IJobs {
   id: number;
@@ -25,6 +26,7 @@ interface IJobs {
 }
 
 interface IJobCard {
+  id: number;
   company: string;
   logo: string;
   logoBackground: string;
@@ -56,6 +58,7 @@ export const logo: React.FC<{ background: string; logo: string }> = ({
 };
 
 export const JobCard: React.FC<IJobCard> = ({
+  id,
   company,
   logo,
   logoBackground,
@@ -65,7 +68,10 @@ export const JobCard: React.FC<IJobCard> = ({
   location,
 }) => {
   return (
-    <div className="relative flex flex-col gap-16 text-black mt-20 bg-devops-secondary-white p-8 pt-12">
+    <Link
+      href={`/jobs/${id}`}
+      className="relative flex flex-col gap-16 text-black mt-20 bg-devops-secondary-white p-8 pt-12"
+    >
       <div
         className={`absolute inset-0 -translate-y-1/2 left-12   aspect-square w-12 rounded-xl flex items-center justify-center`}
         style={{ backgroundColor: logoBackground }}
@@ -80,7 +86,7 @@ export const JobCard: React.FC<IJobCard> = ({
         <h2 className="text-devops-secondary-gray">{company}</h2>
       </div>
       <h1 className="text-devops-primary-violet font-semibold">{location}</h1>
-    </div>
+    </Link>
   );
 };
 
@@ -91,6 +97,7 @@ export async function JobCards() {
       {data.map((job) => (
         <JobCard
           key={job.id}
+          id={job.id}
           company={job.company}
           logo={job.logo}
           contract={job.contract}
