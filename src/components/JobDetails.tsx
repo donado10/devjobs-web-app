@@ -24,12 +24,13 @@ interface IJobDescription {
   };
 }
 
-export const JobCompanyInfo: React.FC<IJobCompanyInfo> = ({
+export const JobCompanyInfo: React.FC<IJobCompanyInfo> = async ({
   company,
   logo,
   logoBackground,
   website,
 }) => {
+  await new Promise((resolve) => setTimeout(resolve, 5000));
   return (
     <div className="relative w-4/5 flex flex-col bg-white items-center justify-center px-4 py-12 gap-4 rounded-md">
       <div
@@ -49,7 +50,7 @@ export const JobCompanyInfo: React.FC<IJobCompanyInfo> = ({
   );
 };
 
-export const JobDescription: React.FC<IJobDescription> = ({
+export const JobDescription: React.FC<IJobDescription> = async ({
   position,
   location,
   postedAt,
@@ -58,6 +59,7 @@ export const JobDescription: React.FC<IJobDescription> = ({
   requirements,
   role,
 }) => {
+  await new Promise((resolve) => setTimeout(resolve, 5000));
   return (
     <div className="p-4 bg-white w-4/5 flex flex-col rounded-md">
       <div className="flex flex-col gap-2 ">
