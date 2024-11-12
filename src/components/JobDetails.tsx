@@ -30,7 +30,6 @@ export const JobCompanyInfo: React.FC<IJobCompanyInfo> = async ({
   logoBackground,
   website,
 }) => {
-  await new Promise((resolve) => setTimeout(resolve, 5000));
   return (
     <div className="relative w-4/5 flex flex-col bg-white items-center justify-center px-4 py-12 gap-4 rounded-md">
       <div
@@ -59,7 +58,6 @@ export const JobDescription: React.FC<IJobDescription> = async ({
   requirements,
   role,
 }) => {
-  await new Promise((resolve) => setTimeout(resolve, 5000));
   return (
     <div className="p-4 bg-white w-4/5 flex flex-col rounded-md">
       <div className="flex flex-col gap-2 ">
@@ -77,11 +75,10 @@ export const JobDescription: React.FC<IJobDescription> = async ({
         <div className="mt-8 flex flex-col gap-8">
           <h1 className="text-2xl font-bold text-black">Requirements</h1>
           <p>{requirements.content}</p>
-          <ul className="ml-6 flex flex-col gap-4">
+          <ul className=" list-inside list-disc ml-6 flex flex-col gap-4 ">
             {requirements.items.map((item, i) => (
-              <li key={i} className="flex items-center gap-8">
-                <span className="block w-[4px]  h-[4px] rounded-full bg-devops-primary-violet"></span>
-                <span>{item}</span>
+              <li key={i} className="flex gap-8 text-devops-primary-violet">
+                <span className="text-devops-secondary-darkGrey">{item}</span>
               </li>
             ))}
           </ul>
@@ -91,7 +88,7 @@ export const JobDescription: React.FC<IJobDescription> = async ({
           <p>{role.content}</p>
           <ol className="ml-4 flex flex-col gap-4">
             {role.items.map((item, i) => (
-              <li key={i} className="flex items-center gap-4">
+              <li key={i} className="flex gap-4">
                 <span className=" text-devops-primary-violet font-bold">
                   {i + 1}
                 </span>{" "}
