@@ -14,8 +14,8 @@ const page: React.FC<Params> = async ({ params }) => {
   const job = data.find((job) => job.id === Number(param))!;
 
   return (
-    <main className="relative w-full p-8 min-h-screen">
-      <div className="absolute right-1/2 translate-x-1/2 top-0 -translate-y-[1%]  w-full flex flex-col items-center gap-8 ">
+    <main className="relative w-full  min-h-screen">
+      <div className="absolute right-1/2 translate-x-1/2 top-0 -translate-y-[1%]  w-full flex flex-col items-center gap-8  ">
         <Suspense fallback={<h1>Loading....</h1>}>
           <JobCompanyInfo
             company={job.company}
@@ -36,10 +36,21 @@ const page: React.FC<Params> = async ({ params }) => {
             website={job.website}
           />
         </Suspense>
-        <div className="p-4 bg-white w-full ">
-          <button className="px-4 py-3 bg-devops-primary-violet  w-full rounded-md">
-            <span className="text-white font-semibold">Apply Now</span>
-          </button>
+        <div className="p-8 bg-white w-full ">
+          <div className="xs:block md:hidden">
+            <button className="px-4 py-3 bg-devops-primary-violet  w-full rounded-md">
+              <span className="text-white font-semibold">Apply Now</span>
+            </button>
+          </div>
+          <div className="xs:hidden md:flex  items-center justify-between">
+            <div>
+              <h1 className="text-black font-bold text-xl">{job.position}</h1>
+              <h2 className="text-devops-secondary-gray">So Digital Inc.</h2>
+            </div>
+            <button className="px-4 py-3 bg-devops-primary-violet  w-fit rounded-md">
+              <span className="text-white font-semibold">Apply Now</span>
+            </button>
+          </div>
         </div>
       </div>
     </main>

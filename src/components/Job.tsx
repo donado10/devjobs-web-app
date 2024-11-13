@@ -93,7 +93,7 @@ export const JobCard: React.FC<IJobCard> = ({
 export async function JobCards() {
   const data = await getData();
   return (
-    <div className="flex flex-col">
+    <div className="xs:flex xs:flex-col md:grid md:grid-cols-2 md:gap-8 xl:gap-4 xl:grid-cols-3 ">
       {data.map((job) => (
         <JobCard
           key={job.id}
