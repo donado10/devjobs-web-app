@@ -49,10 +49,10 @@ export const JobCompanyInfo: React.FC<IJobCompanyInfo> = async ({
       </div>
       <div className="xs:hidden md:flex relative w-full h-[8rem]   bg-white items-center   gap-4 rounded-md">
         <div
-          className="aspect-square rounded-md "
+          className=" rounded-md flex items-center justify-center w-[128px]  aspect-square"
           style={{ backgroundColor: `${logoBackground}` }}
         >
-          <Image src={logo} alt="" width={128} height={128} />
+          <Image src={logo} alt="" width={100} height={100} />
         </div>
         <div className="flex flex-col gap-2 mx-8">
           <h1 className="text-black font-bold text-2xl">{company}</h1>

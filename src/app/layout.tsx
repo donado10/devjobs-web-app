@@ -10,7 +10,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-devops-kumbh bg-devops-secondary-lightGrey`}>
         <Header />
-
         {children}
       </body>
     </html>

@@ -33,7 +33,7 @@ const Header = () => {
           </span>
         </div>
       </div>
-      <div className=" xs:hidden md:hidden xl:flex  pb-8  px-8 text-4xl  items-center w-full md:w-full md:h-[10rem] justify-between bg-[url('/assets/desktop/bg-pattern-header.svg')] bg-no-repeat bg-cover">
+      <div className="  xs:hidden md:hidden xl:flex  pb-8  px-8 text-4xl  items-center w-full md:w-full md:h-[10rem] justify-between bg-[url('/assets/desktop/bg-pattern-header.svg')] bg-no-repeat bg-cover">
         <span className="font-bold text-devops-secondary-white">devjobs</span>
 
         <div className="flex items-center gap-4">
