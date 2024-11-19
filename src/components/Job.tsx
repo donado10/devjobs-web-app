@@ -50,7 +50,7 @@ export const logo: React.FC<{ background: string; logo: string }> = ({
 }) => {
   return (
     <div
-      className={`absolute inset-0 -translate-y-1/2 left-12 a aspect-square w-12 rounded-xl flex items-center justify-center`}
+      className={`a absolute inset-0 left-12 flex aspect-square w-12 -translate-y-1/2 items-center justify-center rounded-xl`}
     >
       <Image src={logo} width={40} height={40} alt="" />
     </div>
@@ -70,10 +70,10 @@ export const JobCard: React.FC<IJobCard> = ({
   return (
     <Link
       href={`/jobs/${id}`}
-      className="relative flex flex-col gap-16 text-black mt-20 bg-devops-secondary-white p-8 pt-12"
+      className="relative mt-20 flex flex-col gap-16 bg-devops-secondary-white p-8 pt-12 text-black"
     >
       <div
-        className={`absolute inset-0 -translate-y-1/2 left-12   aspect-square w-12 rounded-xl flex items-center justify-center`}
+        className={`absolute inset-0 left-12 flex aspect-square w-12 -translate-y-1/2 items-center justify-center rounded-xl`}
         style={{ backgroundColor: logoBackground }}
       >
         <Image src={logo} width={40} height={40} alt="" />
@@ -82,10 +82,10 @@ export const JobCard: React.FC<IJobCard> = ({
         <h2 className="text-devops-secondary-gray">
           {postedAt} . {contract}
         </h2>
-        <h1 className="text-black font-bold text-xl">{position}</h1>
+        <h1 className="text-xl font-bold text-black">{position}</h1>
         <h2 className="text-devops-secondary-gray">{company}</h2>
       </div>
-      <h1 className="text-devops-primary-violet font-semibold">{location}</h1>
+      <h1 className="font-semibold text-devops-primary-violet">{location}</h1>
     </Link>
   );
 };
@@ -93,7 +93,7 @@ export const JobCard: React.FC<IJobCard> = ({
 export async function JobCards() {
   const data = await getData();
   return (
-    <div className="xs:flex xs:flex-col md:grid md:grid-cols-2 md:gap-8 xl:gap-4 xl:grid-cols-3 ">
+    <div className="xs:flex xs:flex-col md:grid md:grid-cols-2 md:gap-8 xl:grid-cols-3 xl:gap-4">
       {data.map((job) => (
         <JobCard
           key={job.id}
