@@ -1,22 +1,35 @@
 "use client";
 
-import React from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import FilterIcon from "@/assets/mobile/icon-filter.svg";
 import SearchIconMobile from "@/assets/mobile/icon-search.svg";
 import SearchIconDesktop from "@/assets/desktop/icon-search.svg";
 import LocationIconDesktop from "@/assets/desktop/icon-location.svg";
 import Image from "next/image";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { EMediaQuery } from "@/hooks/useMediaQuery";
+import Link from "next/link";
 
-const FilterMobile = () => {
+interface IFilter {
+  handleQueryString: (value: {
+    title?: string;
+    location?: string;
+    fullTime?: string;
+  }) => void;
+}
+
+const FilterMobile: React.FC<IFilter> = ({ handleQueryString }) => {
+  const titleRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+
   return (
     <div className="flex w-full items-center justify-between gap-4 rounded-md bg-white px-2 py-4 text-sm">
       <input
         type="text"
         placeholder="Filter by title..."
         className="bg-transparent text-black outline-none"
+        ref={titleRef}
       />
       <div className="flex items-center gap-4">
         <button>
@@ -24,7 +37,12 @@ const FilterMobile = () => {
             <Image src={FilterIcon} alt="" />
           </span>
         </button>
-        <button className="flex items-center justify-center rounded-md bg-devops-primary-violet p-2">
+        <button
+          className="flex items-center justify-center rounded-md bg-devops-primary-violet p-2"
+          onClick={() => {
+            handleQueryString({ title: titleRef.current?.value });
+          }}
+        >
           <span>
             <Image src={SearchIconMobile} alt="" />
           </span>
@@ -34,7 +52,11 @@ const FilterMobile = () => {
   );
 };
 
-const FilterSmall = () => {
+const FilterSmall: React.FC<IFilter> = ({ handleQueryString }) => {
+  const titleRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const locationRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const timeRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+
   return (
     <div className="flex w-full items-center justify-between rounded-md bg-white text-sm">
       <div className="flex w-1/3 items-center gap-4 border-r-[1px] border-devops-secondary-darkGrey/50 px-4 py-6">
@@ -45,6 +67,7 @@ const FilterSmall = () => {
           type="text"
           placeholder="Filter by title..."
           className="bg-transparent text-black outline-none"
+          ref={titleRef}
         />
       </div>
       <div className="flex w-1/3 items-center gap-4 px-4 py-6">
@@ -55,13 +78,21 @@ const FilterSmall = () => {
           type="text"
           placeholder="Filter by location..."
           className="bg-transparent text-black outline-none"
+          ref={locationRef}
         />
       </div>
       <div className="flex w-1/3 items-center gap-4 border-l-[1px] border-devops-secondary-darkGrey/50 px-4 py-6">
-        <input type="checkbox" className="" />
+        <input type="checkbox" className="" ref={timeRef} />
         <span className="text-sm font-bold text-black">Full Time</span>
 
-        <button>
+        <button
+          onClick={() =>
+            handleQueryString({
+              title: titleRef.current?.value,
+              location: locationRef.current?.value,
+            })
+          }
+        >
           <span className="rounded-md bg-devops-primary-violet p-2 text-white">
             Search
           </span>
@@ -70,7 +101,11 @@ const FilterSmall = () => {
     </div>
   );
 };
-const FilterBig = () => {
+const FilterBig: React.FC<IFilter> = ({ handleQueryString }) => {
+  const titleRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const locationRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const timeRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+
   return (
     <div className="flex w-full items-start justify-between rounded-md bg-white text-sm">
       <div className="flex w-2/4 items-center gap-4 border-r-[1px] border-devops-secondary-darkGrey/50 px-4 py-6">
@@ -81,6 +116,7 @@ const FilterBig = () => {
           type="text"
           placeholder="Filter by title,companies,expertise..."
           className="w-full bg-transparent text-black outline-none"
+          ref={titleRef}
         />
       </div>
       <div className="flex w-1/4 items-center gap-4 px-4 py-6">
@@ -91,13 +127,21 @@ const FilterBig = () => {
           type="text"
           placeholder="Filter by location..."
           className="w-full bg-transparent text-black outline-none"
+          ref={locationRef}
         />
       </div>
       <div className="flex w-1/4 items-center gap-4 border-l-[1px] border-devops-secondary-darkGrey/50 px-4 py-6">
-        <input type="checkbox" className="" />
+        <input type="checkbox" className="" ref={timeRef} />
         <span className="text-sm font-bold text-black">Full Time</span>
 
-        <button>
+        <button
+          onClick={() =>
+            handleQueryString({
+              title: titleRef.current?.value,
+              location: locationRef.current?.value,
+            })
+          }
+        >
           <span className="rounded-md bg-devops-primary-violet p-2 text-white">
             Search
           </span>
@@ -111,11 +155,97 @@ const Filter = () => {
   const isMobile = useMediaQuery(EMediaQuery.MOBILE);
   const isSmall = useMediaQuery(EMediaQuery.SMALL);
   const isBig = useMediaQuery(EMediaQuery.BIG);
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const titleQueryHandler = useCallback((value: string | null) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (!value) {
+      params.delete("jobTile");
+      return params;
+    }
+
+    params.set("jobTitle", value);
+    return params;
+  }, []);
+
+  const locationQueryHandler = useCallback((value: string | null) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (!value) {
+      params.delete("location");
+      return params;
+    }
+
+    params.set("location", value);
+    return params;
+  }, []);
+
+  const handleQueryString = useCallback(
+    (value: { title?: string; location?: string; fullTime?: string }) => {
+      let paramsTitle;
+      let paramsLocation;
+      let query = "";
+
+      if (value.title) {
+        paramsTitle = titleQueryHandler(value.title) as URLSearchParams;
+      } else {
+        paramsTitle = "";
+      }
+
+      if (value.location) {
+        paramsLocation = locationQueryHandler(
+          value.location,
+        ) as URLSearchParams;
+
+        paramsLocation = locationQueryHandler(
+          value.location,
+        ) as URLSearchParams;
+      } else {
+        paramsLocation = "";
+      }
+
+      if (!paramsTitle && !paramsLocation) {
+        query = "/";
+        router.push(query);
+        return;
+      }
+
+      query = paramsTitle + "&" + paramsLocation;
+
+      if (query.split("")[query.length - 1] === "&") {
+        query = query
+          .split("")
+          .slice(0, query.length - 1)
+          .join("");
+        router.push("/?" + query);
+        return;
+      }
+
+      if (query.split("")[0] === "&") {
+        query = query.split("").slice(1, query.length).join("");
+        router.push("/?" + query);
+        return;
+      }
+
+      router.push("/?" + query);
+      return;
+    },
+    [],
+  );
+
   return (
     <section className="w-[90%]">
-      {isMobile && !isSmall && <FilterMobile />}
-      {isSmall && !isBig && <FilterSmall />}
-      {isBig && <FilterBig />}
+      {isMobile && !isSmall && (
+        <FilterMobile handleQueryString={handleQueryString} />
+      )}
+      {isSmall && !isBig && (
+        <FilterSmall handleQueryString={handleQueryString} />
+      )}
+      {isBig && <FilterBig handleQueryString={handleQueryString} />}
     </section>
   );
 };

@@ -90,8 +90,46 @@ export const JobCard: React.FC<IJobCard> = ({
   );
 };
 
-export async function JobCards() {
+export const JobCards: React.FC<{
+  filterTitle?: string | undefined;
+  location?: string | undefined;
+}> = async ({ filterTitle, location }) => {
   const data = await getData();
+  if (filterTitle || location) {
+    return (
+      <div className="xs:flex xs:flex-col md:grid md:grid-cols-2 md:gap-8 xl:grid-cols-3 xl:gap-4">
+        {data
+          .filter((job) => {
+            if (location) {
+              return job.location.toLowerCase().includes(location);
+            }
+            return job;
+          })
+          .filter((job) => {
+            if (filterTitle) {
+              return (
+                job.company.toLowerCase().includes(filterTitle) ||
+                job.position.toLowerCase().trim().includes(filterTitle)
+              );
+            }
+            return job;
+          })
+          .map((job) => (
+            <JobCard
+              key={job.id}
+              id={job.id}
+              company={job.company}
+              logo={job.logo}
+              contract={job.contract}
+              location={job.location}
+              logoBackground={job.logoBackground}
+              position={job.position}
+              postedAt={job.postedAt}
+            />
+          ))}
+      </div>
+    );
+  }
   return (
     <div className="xs:flex xs:flex-col md:grid md:grid-cols-2 md:gap-8 xl:grid-cols-3 xl:gap-4">
       {data.map((job) => (
@@ -109,4 +147,4 @@ export async function JobCards() {
       ))}
     </div>
   );
-}
+};
