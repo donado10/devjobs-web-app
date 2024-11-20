@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { hslToHex } from "@/utils/functions";
 import Link from "next/link";
 
 interface IJobs {
@@ -93,12 +92,19 @@ export const JobCard: React.FC<IJobCard> = ({
 export const JobCards: React.FC<{
   filterTitle?: string | undefined;
   location?: string | undefined;
-}> = async ({ filterTitle, location }) => {
+  fullTime?: string | undefined;
+}> = async ({ filterTitle, location, fullTime }) => {
   const data = await getData();
-  if (filterTitle || location) {
+  if (filterTitle || location || fullTime) {
     return (
       <div className="xs:flex xs:flex-col md:grid md:grid-cols-2 md:gap-8 xl:grid-cols-3 xl:gap-4">
         {data
+          .filter((job) => {
+            if (fullTime) {
+              return job.contract.toLowerCase().includes(fullTime);
+            }
+            return job;
+          })
           .filter((job) => {
             if (location) {
               return job.location.toLowerCase().includes(location);

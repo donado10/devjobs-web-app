@@ -12,15 +12,14 @@ export const dynamic = "force-dynamic";
 export default async function Home({ searchParams }: Params) {
   const job = (await searchParams).jobTitle;
   const location = (await searchParams).location;
-
-  console.log(job);
+  const fullTime = (await searchParams).fullTime;
 
   return (
     <main className="relative w-full p-8">
       <div className="absolute right-1/2 top-0 flex w-full -translate-y-1/2 translate-x-1/2 items-center justify-center">
         <Filter />
       </div>
-      <JobCards filterTitle={job} location={location} />
+      <JobCards filterTitle={job} location={location} fullTime={fullTime} />
     </main>
   );
 }

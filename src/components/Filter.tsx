@@ -11,12 +11,17 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { EMediaQuery } from "@/hooks/useMediaQuery";
 import Link from "next/link";
+import {
+  replaceMiddleValue,
+  stripLeadingValue,
+  stripTrailingValue,
+} from "@/utils/functions";
 
 interface IFilter {
   handleQueryString: (value: {
     title?: string;
     location?: string;
-    fullTime?: string;
+    fullTime?: boolean;
   }) => void;
 }
 
@@ -139,6 +144,7 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString }) => {
             handleQueryString({
               title: titleRef.current?.value,
               location: locationRef.current?.value,
+              fullTime: timeRef.current?.checked,
             })
           }
         >
@@ -184,10 +190,23 @@ const Filter = () => {
     return params;
   }, []);
 
+  const timeQueryHandler = useCallback((value: boolean | null) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (value === null) {
+      params.delete("fullTime");
+      return params;
+    }
+
+    params.set("fullTime", value ? "full time" : "part time");
+    return params;
+  }, []);
+
   const handleQueryString = useCallback(
-    (value: { title?: string; location?: string; fullTime?: string }) => {
+    (value: { title?: string; location?: string; fullTime?: boolean }) => {
       let paramsTitle;
       let paramsLocation;
+      let paramsFullTime;
       let query = "";
 
       if (value.title) {
@@ -208,28 +227,31 @@ const Filter = () => {
         paramsLocation = "";
       }
 
-      if (!paramsTitle && !paramsLocation) {
+      if (value.fullTime) {
+        paramsFullTime = timeQueryHandler(value.fullTime) as URLSearchParams;
+
+        paramsFullTime = timeQueryHandler(value.fullTime) as URLSearchParams;
+      } else {
+        paramsFullTime = "";
+      }
+
+      if (!paramsTitle && !paramsLocation && !paramsFullTime) {
         query = "/";
         router.push(query);
         return;
       }
 
-      query = paramsTitle + "&" + paramsLocation;
+      query = paramsTitle + "&" + paramsLocation + "&" + paramsFullTime;
 
       if (query.split("")[query.length - 1] === "&") {
-        query = query
-          .split("")
-          .slice(0, query.length - 1)
-          .join("");
-        router.push("/?" + query);
-        return;
+        query = stripTrailingValue(query);
       }
 
       if (query.split("")[0] === "&") {
-        query = query.split("").slice(1, query.length).join("");
-        router.push("/?" + query);
-        return;
+        query = stripLeadingValue(query);
       }
+
+      query = replaceMiddleValue(query);
 
       router.push("/?" + query);
       return;
