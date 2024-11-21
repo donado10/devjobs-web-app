@@ -6,16 +6,18 @@ import SearchIconMobile from "@/assets/mobile/icon-search.svg";
 import SearchIconDesktop from "@/assets/desktop/icon-search.svg";
 import LocationIconDesktop from "@/assets/desktop/icon-location.svg";
 import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { EMediaQuery } from "@/hooks/useMediaQuery";
-import Link from "next/link";
 import {
   replaceMiddleValue,
   stripLeadingValue,
   stripTrailingValue,
 } from "@/utils/functions";
+
+import MyPortal from "./Overlay";
+import Modal from "./Modal";
 
 interface IFilter {
   handleQueryString: (value: {
@@ -27,6 +29,15 @@ interface IFilter {
 
 const FilterMobile: React.FC<IFilter> = ({ handleQueryString }) => {
   const titleRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const [enableModal, setEnableModal] = useState(false);
+  const [modalValue, setModalValue] = useState({
+    location: "",
+    fullTime: false,
+  });
+
+  useEffect(() => {
+    console.log(modalValue);
+  }, [JSON.stringify(modalValue)]);
 
   return (
     <div className="flex w-full items-center justify-between gap-4 rounded-md bg-white px-2 py-4 text-sm">
@@ -37,7 +48,7 @@ const FilterMobile: React.FC<IFilter> = ({ handleQueryString }) => {
         ref={titleRef}
       />
       <div className="flex items-center gap-4">
-        <button>
+        <button onClick={() => setEnableModal(true)}>
           <span>
             <Image src={FilterIcon} alt="" />
           </span>
@@ -45,7 +56,11 @@ const FilterMobile: React.FC<IFilter> = ({ handleQueryString }) => {
         <button
           className="flex items-center justify-center rounded-md bg-devops-primary-violet p-2"
           onClick={() => {
-            handleQueryString({ title: titleRef.current?.value });
+            handleQueryString({
+              title: titleRef.current?.value,
+              location: modalValue?.location,
+              fullTime: modalValue?.fullTime,
+            });
           }}
         >
           <span>
@@ -53,6 +68,20 @@ const FilterMobile: React.FC<IFilter> = ({ handleQueryString }) => {
           </span>
         </button>
       </div>
+      {enableModal && (
+        <MyPortal
+          isOpen={true}
+          onClose={() => setEnableModal(false)}
+          modal={
+            <Modal
+              handleQueryString={handleQueryString}
+              onClose={() => setEnableModal(false)}
+              setValue={setModalValue}
+              defaultValue={modalValue}
+            />
+          }
+        />
+      )}
     </div>
   );
 };
@@ -164,7 +193,6 @@ const Filter = () => {
 
   const searchParams = useSearchParams();
   const router = useRouter();
-  const pathname = usePathname();
 
   const titleQueryHandler = useCallback((value: string | null) => {
     const params = new URLSearchParams(searchParams.toString());
