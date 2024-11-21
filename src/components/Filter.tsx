@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import FilterIcon from "@/assets/mobile/icon-filter.svg";
+import FilterIconLight from "@/assets/mobile/icon-filter-light.svg";
+import FilterIconDark from "@/assets/mobile/icon-filter-dark.svg";
 import SearchIconMobile from "@/assets/mobile/icon-search.svg";
 import SearchIconDesktop from "@/assets/desktop/icon-search.svg";
 import LocationIconDesktop from "@/assets/desktop/icon-location.svg";
@@ -18,6 +19,7 @@ import {
 
 import MyPortal from "./Overlay";
 import Modal from "./Modal";
+import { useTheme } from "next-themes";
 
 interface IFilter {
   handleQueryString: (value: {
@@ -34,23 +36,45 @@ const FilterMobile: React.FC<IFilter> = ({ handleQueryString }) => {
     location: "",
     fullTime: false,
   });
+  const [mounted, setMounted] = useState(false);
+  const { setTheme, resolvedTheme } = useTheme();
 
   useEffect(() => {
-    console.log(modalValue);
-  }, [JSON.stringify(modalValue)]);
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {}, [JSON.stringify(modalValue)]);
+  if (!mounted) {
+    return null;
+  }
+
+  let className =
+    "flex w-full items-center justify-between gap-4 rounded-md  px-2 py-4 text-sm";
+
+  if (resolvedTheme === "midnight") {
+    className = className + " " + "bg-devops-primary-darkBlue text-white";
+  }
+  if (resolvedTheme === "lightGray") {
+    className = className + " " + "bg-devops-secondary-white text-black";
+  }
 
   return (
-    <div className="flex w-full items-center justify-between gap-4 rounded-md bg-white px-2 py-4 text-sm">
+    <div className={className}>
       <input
         type="text"
         placeholder="Filter by title..."
-        className="bg-transparent text-black outline-none"
+        className="bg-transparent outline-none"
         ref={titleRef}
       />
       <div className="flex items-center gap-4">
         <button onClick={() => setEnableModal(true)}>
           <span>
-            <Image src={FilterIcon} alt="" />
+            {resolvedTheme === "lightGray" && (
+              <Image src={FilterIconDark} alt="" />
+            )}
+            {resolvedTheme === "midnight" && (
+              <Image src={FilterIconLight} alt="" />
+            )}
           </span>
         </button>
         <button
@@ -91,8 +115,28 @@ const FilterSmall: React.FC<IFilter> = ({ handleQueryString }) => {
   const locationRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const timeRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
+  const [mounted, setMounted] = useState(false);
+  const { setTheme, resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  let className = "flex w-full items-center justify-between rounded-md text-sm";
+
+  if (resolvedTheme === "midnight") {
+    className = className + " " + "bg-devops-primary-darkBlue text-white";
+  }
+  if (resolvedTheme === "lightGray") {
+    className = className + " " + "bg-devops-secondary-white text-black";
+  }
+
   return (
-    <div className="flex w-full items-center justify-between rounded-md bg-white text-sm">
+    <div className={className}>
       <div className="flex w-1/3 items-center gap-4 border-r-[1px] border-devops-secondary-darkGrey/50 px-4 py-6">
         <span>
           <Image src={SearchIconDesktop} width={20} height={20} alt="" />
@@ -117,7 +161,7 @@ const FilterSmall: React.FC<IFilter> = ({ handleQueryString }) => {
       </div>
       <div className="flex w-1/3 items-center gap-4 border-l-[1px] border-devops-secondary-darkGrey/50 px-4 py-6">
         <input type="checkbox" className="" ref={timeRef} />
-        <span className="text-sm font-bold text-black">Full Time</span>
+        <span className="text-sm font-bold">Full Time</span>
 
         <button
           onClick={() =>
@@ -139,9 +183,28 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString }) => {
   const titleRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const locationRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const timeRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const [mounted, setMounted] = useState(false);
+  const { setTheme, resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  let className = "flex w-full items-start justify-between rounded-md  text-sm";
+
+  if (resolvedTheme === "midnight") {
+    className = className + " " + "bg-devops-primary-darkBlue text-white";
+  }
+  if (resolvedTheme === "lightGray") {
+    className = className + " " + "bg-devops-secondary-white text-black";
+  }
 
   return (
-    <div className="flex w-full items-start justify-between rounded-md bg-white text-sm">
+    <div className={className}>
       <div className="flex w-2/4 items-center gap-4 border-r-[1px] border-devops-secondary-darkGrey/50 px-4 py-6">
         <span>
           <Image src={SearchIconDesktop} width={20} height={20} alt="" />
@@ -166,7 +229,7 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString }) => {
       </div>
       <div className="flex w-1/4 items-center gap-4 border-l-[1px] border-devops-secondary-darkGrey/50 px-4 py-6">
         <input type="checkbox" className="" ref={timeRef} />
-        <span className="text-sm font-bold text-black">Full Time</span>
+        <span className="text-sm font-bold">Full Time</span>
 
         <button
           onClick={() =>

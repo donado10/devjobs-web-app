@@ -12,6 +12,7 @@ const Toggle = () => {
   const { setTheme, resolvedTheme } = useTheme();
 
   useEffect(() => {
+    setTheme("lightGray");
     setMounted(true);
   }, []);
 
@@ -19,7 +20,7 @@ const Toggle = () => {
     return null;
   }
 
-  if (resolvedTheme === "light") {
+  if (resolvedTheme === "lightGray") {
     return (
       <button
         onClick={() => {
@@ -36,7 +37,7 @@ const Toggle = () => {
     return (
       <button
         onClick={() => {
-          setTheme("light");
+          setTheme("lightGray");
         }}
       >
         <span>

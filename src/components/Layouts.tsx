@@ -25,8 +25,8 @@ export const JobCardLayout: React.FC<{ id: number; children: ReactNode }> = ({
   if (resolvedTheme === "midnight") {
     className = className + " " + "bg-devops-primary-darkBlue text-white";
   }
-  if (resolvedTheme === "light") {
-    className = className + " " + "bg-devops-secondary-lightGrey text-black";
+  if (resolvedTheme === "lightGray") {
+    className = className + " " + "bg-devops-secondary-white text-black";
   }
 
   return (
@@ -34,4 +34,30 @@ export const JobCardLayout: React.FC<{ id: number; children: ReactNode }> = ({
       {children}
     </Link>
   );
+};
+
+export const ModalLayout: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [mounted, setMounted] = useState(false);
+  const { setTheme, resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  let className = "w-4/5 rounded-md ";
+
+  if (resolvedTheme === "midnight") {
+    className = className + " " + "bg-devops-primary-darkBlue text-white";
+  }
+  if (resolvedTheme === "lightGray") {
+    className = className + " " + "bg-devops-secondary-white text-black";
+  }
+
+  return <div className={className}>{children}</div>;
 };
