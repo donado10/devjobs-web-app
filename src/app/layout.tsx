@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import "./globals.css";
+import { Providers } from "@/components/Providers";
 
 export default function RootLayout({
   children,
@@ -7,10 +8,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`font-devops-kumbh bg-devops-secondary-lightGrey`}>
-        <Header />
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className={`font-devops-kumbh`}>
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );

@@ -4,3 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
+[data-theme="midnight"] {
+  background-color: #121721;
+}

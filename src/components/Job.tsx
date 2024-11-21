@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { JobCardLayout } from "./Layouts";
 
 interface IJobs {
   id: number;
@@ -67,10 +68,7 @@ export const JobCard: React.FC<IJobCard> = ({
   location,
 }) => {
   return (
-    <Link
-      href={`/jobs/${id}`}
-      className="relative mt-20 flex flex-col gap-16 bg-devops-secondary-white p-8 pt-12 text-black"
-    >
+    <JobCardLayout id={id}>
       <div
         className={`absolute inset-0 left-12 flex aspect-square w-12 -translate-y-1/2 items-center justify-center rounded-xl`}
         style={{ backgroundColor: logoBackground }}
@@ -81,11 +79,11 @@ export const JobCard: React.FC<IJobCard> = ({
         <h2 className="text-devops-secondary-gray">
           {postedAt} . {contract}
         </h2>
-        <h1 className="text-xl font-bold text-black">{position}</h1>
+        <h1 className="text-xl font-bold">{position}</h1>
         <h2 className="text-devops-secondary-gray">{company}</h2>
       </div>
       <h1 className="font-semibold text-devops-primary-violet">{location}</h1>
-    </Link>
+    </JobCardLayout>
   );
 };
 

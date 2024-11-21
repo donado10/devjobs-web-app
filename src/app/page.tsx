@@ -1,5 +1,4 @@
 import Filter from "@/components/Filter";
-import Header from "@/components/Header";
 import { JobCards } from "@/components/Job";
 import React from "react";
 

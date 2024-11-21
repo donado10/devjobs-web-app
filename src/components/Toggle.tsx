@@ -1,39 +1,50 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 import LightToggle from "@/assets/common/lightToggle.svg";
 import DarkToggle from "@/assets/common/darkToggle.svg";
+import { useTheme } from "next-themes";
 
 const Toggle = () => {
-  const [theme, setTheme] = useState<{ theme: "dark" | "light" }>({
-    theme: "light",
-  });
+  const [mounted, setMounted] = useState(false);
+  const { setTheme, resolvedTheme } = useTheme();
 
-  return (
-    <button
-      onClick={() =>
-        setTheme((prev) => {
-          if (prev.theme === "dark") {
-            return { theme: "light" };
-          }
-          return { theme: "dark" };
-        })
-      }
-    >
-      {theme.theme === "light" && (
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  if (resolvedTheme === "light") {
+    return (
+      <button
+        onClick={() => {
+          setTheme("midnight");
+        }}
+      >
         <span>
           <Image src={LightToggle} alt="" />
         </span>
-      )}
-      {theme.theme === "dark" && (
+      </button>
+    );
+  }
+  if (resolvedTheme === "midnight") {
+    return (
+      <button
+        onClick={() => {
+          setTheme("light");
+        }}
+      >
         <span>
           <Image src={DarkToggle} alt="" />
         </span>
-      )}
-    </button>
-  );
+      </button>
+    );
+  }
 };
 
 export default Toggle;
