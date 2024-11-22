@@ -60,7 +60,7 @@ const FilterMobile: React.FC<IFilter> = ({
   }
 
   let className =
-    "flex w-full items-center justify-between gap-4 rounded-md  px-2 py-4 text-sm";
+    "flex w-full items-center justify-between gap-4 rounded-md  h-16 px-4 text-sm";
 
   if (resolvedTheme === "midnight") {
     className = className + " " + "bg-devops-primary-darkBlue text-white";
@@ -74,7 +74,7 @@ const FilterMobile: React.FC<IFilter> = ({
       <input
         type="text"
         placeholder="Filter by title..."
-        className="bg-transparent outline-none"
+        className="w-full bg-transparent outline-none"
         ref={titleRef}
         defaultValue={defaultValue.title}
       />
@@ -90,7 +90,7 @@ const FilterMobile: React.FC<IFilter> = ({
           </span>
         </button>
         <button
-          className="flex items-center justify-center rounded-md bg-devops-primary-violet p-2"
+          className="flex items-center justify-center rounded-md bg-devops-primary-violet p-2 hover:bg-devops-primary-violet/40"
           onClick={() => {
             handleQueryString({
               title: titleRef.current?.value,
@@ -141,7 +141,8 @@ const FilterSmall: React.FC<IFilter> = ({
     return null;
   }
 
-  let className = "flex w-full items-center justify-between rounded-md text-sm";
+  let className =
+    "flex w-full items-center justify-between rounded-md text-sm h-16";
 
   if (resolvedTheme === "midnight") {
     className = className + " " + "bg-devops-primary-darkBlue text-white";
@@ -152,7 +153,7 @@ const FilterSmall: React.FC<IFilter> = ({
 
   return (
     <div className={className}>
-      <div className="flex w-1/3 items-center gap-4 border-r-[1px] border-devops-secondary-darkGrey/50 px-4 py-6">
+      <div className="flex h-full w-1/3 items-center gap-4 border-r-[1px] border-devops-secondary-darkGrey/50 pl-4">
         <span>
           <Image src={SearchIconDesktop} width={20} height={20} alt="" />
         </span>
@@ -164,7 +165,7 @@ const FilterSmall: React.FC<IFilter> = ({
           defaultValue={defaultValue.title}
         />
       </div>
-      <div className="flex w-1/3 items-center gap-4 px-4 py-6">
+      <div className="flex h-full w-1/3 items-center gap-4 pl-4">
         <span>
           <Image src={LocationIconDesktop} width={15} height={15} alt="" />
         </span>
@@ -176,7 +177,7 @@ const FilterSmall: React.FC<IFilter> = ({
           defaultValue={defaultValue.location}
         />
       </div>
-      <div className="flex w-1/3 items-center gap-4 border-l-[1px] border-devops-secondary-darkGrey/50 px-4 py-6">
+      <div className="flex h-full w-1/3 items-center gap-4 border-l-[1px] border-devops-secondary-darkGrey/50 pl-4">
         <input
           type="checkbox"
           className=""
@@ -186,6 +187,7 @@ const FilterSmall: React.FC<IFilter> = ({
         <span className="text-sm font-bold">Full Time</span>
 
         <button
+          className="rounded-md bg-devops-primary-violet p-2 text-white hover:bg-devops-primary-violet/40"
           onClick={() =>
             handleQueryString({
               title: titleRef.current?.value,
@@ -194,9 +196,7 @@ const FilterSmall: React.FC<IFilter> = ({
             })
           }
         >
-          <span className="rounded-md bg-devops-primary-violet p-2 text-white">
-            Search
-          </span>
+          <span>Search</span>
         </button>
       </div>
     </div>
@@ -218,7 +218,8 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString, defaultValue }) => {
     return null;
   }
 
-  let className = "flex w-full items-start justify-between rounded-md  text-sm";
+  let className =
+    "flex w-full items-start justify-between rounded-md  text-sm  h-16";
 
   if (resolvedTheme === "midnight") {
     className = className + " " + "bg-devops-primary-darkBlue text-white";
@@ -229,7 +230,7 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString, defaultValue }) => {
 
   return (
     <div className={className}>
-      <div className="flex w-2/4 items-center gap-4 border-r-[1px] border-devops-secondary-darkGrey/50 px-4 py-6">
+      <div className="flex h-full w-2/4 items-center justify-center gap-4 border-r-[1px] border-devops-secondary-darkGrey/50 pl-4">
         <span>
           <Image src={SearchIconDesktop} width={20} height={20} alt="" />
         </span>
@@ -241,7 +242,7 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString, defaultValue }) => {
           defaultValue={defaultValue.title}
         />
       </div>
-      <div className="flex w-1/4 items-center gap-4 px-4 py-6">
+      <div className="flex h-full w-1/4 items-center gap-4 pl-4">
         <span className="">
           <Image src={LocationIconDesktop} width={15} height={15} alt="" />
         </span>
@@ -253,7 +254,7 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString, defaultValue }) => {
           defaultValue={defaultValue.location}
         />
       </div>
-      <div className="flex w-1/4 items-center gap-4 border-l-[1px] border-devops-secondary-darkGrey/50 px-4 py-6">
+      <div className="flex h-full w-1/4 items-center gap-4 border-l-[1px] border-devops-secondary-darkGrey/50 pl-4">
         <input
           type="checkbox"
           className=""
@@ -263,6 +264,7 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString, defaultValue }) => {
         <span className="text-sm font-bold">Full Time</span>
 
         <button
+          className="rounded-md bg-devops-primary-violet p-2 hover:bg-devops-primary-violet/40"
           onClick={() =>
             handleQueryString({
               title: titleRef.current?.value,
@@ -271,9 +273,7 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString, defaultValue }) => {
             })
           }
         >
-          <span className="rounded-md bg-devops-primary-violet p-2 text-white">
-            Search
-          </span>
+          <span className="text-white">Search</span>
         </button>
       </div>
     </div>

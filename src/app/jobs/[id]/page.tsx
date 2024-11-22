@@ -48,7 +48,7 @@ const page: React.FC<Params> = async ({ params }) => {
               <h1 className="text-xl font-bold">{job.position}</h1>
               <h2 className="text-devops-secondary-gray">So Digital Inc.</h2>
             </div>
-            <button className="w-fit rounded-md bg-devops-primary-violet px-4 py-3">
+            <button className="w-fit rounded-md bg-devops-primary-violet px-4 py-3 hover:bg-devops-primary-violet/40">
               <span className="font-semibold text-white">Apply Now</span>
             </button>
           </div>

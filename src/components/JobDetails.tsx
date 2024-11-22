@@ -90,7 +90,7 @@ export const JobDescription: React.FC<IJobDescription> = async ({
             {location}
           </h2>
         </div>
-        <button className="rounded-md bg-devops-primary-violet px-4 py-3 xs:mt-12 xs:w-full md:mt-0 md:w-fit">
+        <button className="rounded-md bg-devops-primary-violet px-4 py-3 hover:bg-devops-primary-violet/40 xs:mt-12 xs:w-full md:mt-0 md:w-fit">
           <span className="font-semibold text-white">Company Site</span>
         </button>
       </div>
