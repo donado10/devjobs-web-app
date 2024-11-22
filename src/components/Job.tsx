@@ -40,7 +40,7 @@ export async function getData() {
   "use server";
   /*  const file = await fs.readFile(process.cwd() + "/src/data/data.json", "utf8");
   const data: IJobs[] = JSON.parse(file); */
-  const response = await fetch("http://127.0.0.1/data/data.json");
+  const response = await fetch("https://127.0.0.1/data/data.json");
   const data: IJobs[] = await response.json();
 
   return data;
