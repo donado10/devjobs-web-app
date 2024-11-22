@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { JobCardLayout } from "./Layouts";
 
 interface IJobs {
@@ -44,10 +43,7 @@ export async function getData() {
   return data;
 }
 
-export const logo: React.FC<{ background: string; logo: string }> = ({
-  background,
-  logo,
-}) => {
+export const logo: React.FC<{ logo: string }> = ({ logo }) => {
   return (
     <div
       className={`a absolute inset-0 left-12 flex aspect-square w-12 -translate-y-1/2 items-center justify-center rounded-xl`}

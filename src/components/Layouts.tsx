@@ -8,11 +8,10 @@ export const JobCardLayout: React.FC<{ id: number; children: ReactNode }> = ({
   id,
   children,
 }) => {
-  const { setTheme, resolvedTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setTheme("midnight");
     setMounted(true);
   }, []);
 
@@ -40,7 +39,7 @@ export const ModalLayout: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [mounted, setMounted] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -66,7 +65,7 @@ export const JobCompanyInfoLayout: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [mounted, setMounted] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -92,7 +91,7 @@ export const JobDescriptionLayout: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [mounted, setMounted] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -118,7 +117,7 @@ export const JobFooterLayout: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [mounted, setMounted] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);

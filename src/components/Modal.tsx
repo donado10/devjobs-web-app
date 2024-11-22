@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef } from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import LocationIconDesktop from "@/assets/desktop/icon-location.svg";
 import { ModalLayout } from "./Layouts";

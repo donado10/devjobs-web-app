@@ -20,8 +20,6 @@ import {
 import MyPortal from "./Overlay";
 import Modal from "./Modal";
 import { useTheme } from "next-themes";
-import { time } from "console";
-import { title } from "process";
 
 interface IFilter {
   handleQueryString: (value: {
@@ -48,7 +46,7 @@ const FilterMobile: React.FC<IFilter> = ({
     fullTime: defaultValue.fullTime,
   });
   const [mounted, setMounted] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -131,7 +129,7 @@ const FilterSmall: React.FC<IFilter> = ({
   const timeRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const [mounted, setMounted] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -207,8 +205,7 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString, defaultValue }) => {
   const locationRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const timeRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const [mounted, setMounted] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
-  const params = useSearchParams();
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -381,13 +378,13 @@ const Filter = () => {
     [],
   );
 
-  const getUrlData = () => {
+  const getUrlData = useCallback(() => {
     return {
       title: searchParams.get("jobTitle") || "",
       location: searchParams.get("location") || "",
       fullTime: searchParams.get("fullTime") === "full time",
     };
-  };
+  }, []);
 
   return (
     <section className="w-[90%]">
