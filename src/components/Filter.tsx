@@ -20,6 +20,8 @@ import {
 import MyPortal from "./Overlay";
 import Modal from "./Modal";
 import { useTheme } from "next-themes";
+import { time } from "console";
+import { title } from "process";
 
 interface IFilter {
   handleQueryString: (value: {
@@ -27,14 +29,23 @@ interface IFilter {
     location?: string;
     fullTime?: boolean;
   }) => void;
+
+  defaultValue: {
+    title: string;
+    location: string;
+    fullTime: boolean;
+  };
 }
 
-const FilterMobile: React.FC<IFilter> = ({ handleQueryString }) => {
+const FilterMobile: React.FC<IFilter> = ({
+  handleQueryString,
+  defaultValue,
+}) => {
   const titleRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const [enableModal, setEnableModal] = useState(false);
   const [modalValue, setModalValue] = useState({
-    location: "",
-    fullTime: false,
+    location: defaultValue.location,
+    fullTime: defaultValue.fullTime,
   });
   const [mounted, setMounted] = useState(false);
   const { setTheme, resolvedTheme } = useTheme();
@@ -65,6 +76,7 @@ const FilterMobile: React.FC<IFilter> = ({ handleQueryString }) => {
         placeholder="Filter by title..."
         className="bg-transparent outline-none"
         ref={titleRef}
+        defaultValue={defaultValue.title}
       />
       <div className="flex items-center gap-4">
         <button onClick={() => setEnableModal(true)}>
@@ -110,7 +122,10 @@ const FilterMobile: React.FC<IFilter> = ({ handleQueryString }) => {
   );
 };
 
-const FilterSmall: React.FC<IFilter> = ({ handleQueryString }) => {
+const FilterSmall: React.FC<IFilter> = ({
+  handleQueryString,
+  defaultValue,
+}) => {
   const titleRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const locationRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const timeRef = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -144,8 +159,9 @@ const FilterSmall: React.FC<IFilter> = ({ handleQueryString }) => {
         <input
           type="text"
           placeholder="Filter by title..."
-          className="bg-transparent text-black outline-none"
+          className="bg-transparent outline-none"
           ref={titleRef}
+          defaultValue={defaultValue.title}
         />
       </div>
       <div className="flex w-1/3 items-center gap-4 px-4 py-6">
@@ -155,12 +171,18 @@ const FilterSmall: React.FC<IFilter> = ({ handleQueryString }) => {
         <input
           type="text"
           placeholder="Filter by location..."
-          className="bg-transparent text-black outline-none"
+          className="bg-transparent outline-none"
           ref={locationRef}
+          defaultValue={defaultValue.location}
         />
       </div>
       <div className="flex w-1/3 items-center gap-4 border-l-[1px] border-devops-secondary-darkGrey/50 px-4 py-6">
-        <input type="checkbox" className="" ref={timeRef} />
+        <input
+          type="checkbox"
+          className=""
+          ref={timeRef}
+          defaultChecked={defaultValue.fullTime}
+        />
         <span className="text-sm font-bold">Full Time</span>
 
         <button
@@ -168,6 +190,7 @@ const FilterSmall: React.FC<IFilter> = ({ handleQueryString }) => {
             handleQueryString({
               title: titleRef.current?.value,
               location: locationRef.current?.value,
+              fullTime: timeRef.current?.checked,
             })
           }
         >
@@ -179,12 +202,13 @@ const FilterSmall: React.FC<IFilter> = ({ handleQueryString }) => {
     </div>
   );
 };
-const FilterBig: React.FC<IFilter> = ({ handleQueryString }) => {
+const FilterBig: React.FC<IFilter> = ({ handleQueryString, defaultValue }) => {
   const titleRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const locationRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const timeRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const [mounted, setMounted] = useState(false);
   const { setTheme, resolvedTheme } = useTheme();
+  const params = useSearchParams();
 
   useEffect(() => {
     setMounted(true);
@@ -214,6 +238,7 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString }) => {
           placeholder="Filter by title,companies,expertise..."
           className="w-full bg-transparent outline-none"
           ref={titleRef}
+          defaultValue={defaultValue.title}
         />
       </div>
       <div className="flex w-1/4 items-center gap-4 px-4 py-6">
@@ -225,10 +250,16 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString }) => {
           placeholder="Filter by location..."
           className="t w-full bg-transparent outline-none"
           ref={locationRef}
+          defaultValue={defaultValue.location}
         />
       </div>
       <div className="flex w-1/4 items-center gap-4 border-l-[1px] border-devops-secondary-darkGrey/50 px-4 py-6">
-        <input type="checkbox" className="" ref={timeRef} />
+        <input
+          type="checkbox"
+          className=""
+          ref={timeRef}
+          defaultChecked={defaultValue.fullTime}
+        />
         <span className="text-sm font-bold">Full Time</span>
 
         <button
@@ -350,15 +381,34 @@ const Filter = () => {
     [],
   );
 
+  const getUrlData = () => {
+    return {
+      title: searchParams.get("jobTitle") || "",
+      location: searchParams.get("location") || "",
+      fullTime: searchParams.get("fullTime") === "full time",
+    };
+  };
+
   return (
     <section className="w-[90%]">
       {isMobile && !isSmall && (
-        <FilterMobile handleQueryString={handleQueryString} />
+        <FilterMobile
+          handleQueryString={handleQueryString}
+          defaultValue={getUrlData()}
+        />
       )}
       {isSmall && !isBig && (
-        <FilterSmall handleQueryString={handleQueryString} />
+        <FilterSmall
+          handleQueryString={handleQueryString}
+          defaultValue={getUrlData()}
+        />
       )}
-      {isBig && <FilterBig handleQueryString={handleQueryString} />}
+      {isBig && (
+        <FilterBig
+          handleQueryString={handleQueryString}
+          defaultValue={getUrlData()}
+        />
+      )}
     </section>
   );
 };
