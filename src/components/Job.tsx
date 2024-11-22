@@ -38,13 +38,10 @@ interface IJobCard {
 
 export async function getData() {
   "use server";
-  // const response = await fetch("/data/data.json");
-  const file = await fs.readFile(
-    process.cwd() + "/src/app/data/data.json",
-    "utf8",
-  );
-  const data: IJobs[] = JSON.parse(file);
-  //const data: IJobs[] = await response.json();
+  /*  const file = await fs.readFile(process.cwd() + "/src/data/data.json", "utf8");
+  const data: IJobs[] = JSON.parse(file); */
+  const response = await fetch("http://127.0.0.1/data/data.json");
+  const data: IJobs[] = await response.json();
 
   return data;
 }
