@@ -37,7 +37,7 @@ interface IJobCard {
 
 export async function getData() {
   "use server";
-  const response = await fetch("http://localhost:3000/data/data.json");
+  const response = await fetch("/data/data.json");
   const data: IJobs[] = await response.json();
 
   return data;
