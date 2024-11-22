@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { JobCardLayout } from "./Layouts";
+import { promises as fs } from "fs";
 
 interface IJobs {
   id: number;
@@ -37,8 +38,13 @@ interface IJobCard {
 
 export async function getData() {
   "use server";
-  const response = await fetch("/data/data.json");
-  const data: IJobs[] = await response.json();
+  // const response = await fetch("/data/data.json");
+  const file = await fs.readFile(
+    process.cwd() + "/public/data/data.json",
+    "utf8",
+  );
+  const data: IJobs[] = JSON.parse(file);
+  //const data: IJobs[] = await response.json();
 
   return data;
 }
