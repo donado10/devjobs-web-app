@@ -215,6 +215,7 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString, defaultValue }) => {
     return null;
   }
 
+  console.log(defaultValue);
   let className =
     "flex w-full items-start justify-between rounded-md  text-sm  h-16";
 
@@ -378,13 +379,13 @@ const Filter = () => {
     [],
   );
 
-  const getUrlData = useCallback(() => {
+  const getUrlData = () => {
     return {
       title: searchParams.get("jobTitle") || "",
       location: searchParams.get("location") || "",
       fullTime: searchParams.get("fullTime") === "full time",
     };
-  }, []);
+  };
 
   return (
     <section className="w-[90%]">
