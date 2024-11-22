@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { JobCardLayout } from "./Layouts";
-import { promises as fs } from "fs";
+//import { promises as fs } from "fs";
 
 interface IJobs {
   id: number;
