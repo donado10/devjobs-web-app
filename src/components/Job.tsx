@@ -39,10 +39,7 @@ interface IJobCard {
 export async function getData() {
   "use server";
   // const response = await fetch("/data/data.json");
-  const file = await fs.readFile(
-    process.cwd() + "/public/data/data.json",
-    "utf8",
-  );
+  const file = await fs.readFile(process.cwd() + "/src/data/data.json", "utf8");
   const data: IJobs[] = JSON.parse(file);
   //const data: IJobs[] = await response.json();
 
