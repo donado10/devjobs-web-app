@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { JobCompanyInfoLayout, JobDescriptionLayout } from "./Layouts";
 
 interface IJobCompanyInfo {
   company: string;
@@ -31,40 +32,40 @@ export const JobCompanyInfo: React.FC<IJobCompanyInfo> = async ({
   website,
 }) => {
   return (
-    <section className="w-4/5 ">
-      <div className="xs:flex md:hidden relative   flex-col bg-white items-center justify-center px-4 py-12 gap-4 rounded-md">
+    <JobCompanyInfoLayout>
+      <div className="relative flex-col items-center justify-center gap-4 rounded-md px-4 py-12 xs:flex md:hidden">
         <div
-          className={`absolute inset-0  left-1/2 -translate-x-1/2 -translate-y-1/2  aspect-square w-12 rounded-xl flex items-center justify-center `}
+          className={`absolute inset-0 left-1/2 flex aspect-square w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-xl`}
           style={{ backgroundColor: `${logoBackground}` }}
         >
           <Image src={logo} alt="" width={40} height={40} />
         </div>
-        <h1 className="text-black font-bold text-2xl">{company}</h1>
+        <h1 className="text-2xl font-bold">{company}</h1>
         <h2 className="text-devops-secondary-darkGrey">{website}</h2>
-        <button className="px-4 py-3 bg-devops-primary-lightViolet/20  w-fit rounded-md">
-          <span className="text-devops-primary-violet font-semibold">
+        <button className="w-fit rounded-md bg-devops-primary-lightViolet/20 px-4 py-3">
+          <span className="font-semibold text-devops-primary-violet">
             Company Site
           </span>
         </button>
       </div>
-      <div className="xs:hidden md:flex relative w-full h-[8rem]   bg-white items-center   gap-4 rounded-md">
+      <div className="relative h-[8rem] w-full items-center gap-4 rounded-md xs:hidden md:flex">
         <div
-          className=" rounded-md flex items-center justify-center w-[128px]  aspect-square"
+          className="flex aspect-square w-[128px] items-center justify-center rounded-md"
           style={{ backgroundColor: `${logoBackground}` }}
         >
           <Image src={logo} alt="" width={100} height={100} />
         </div>
-        <div className="flex flex-col gap-2 mx-8">
-          <h1 className="text-black font-bold text-2xl">{company}</h1>
+        <div className="mx-8 flex flex-col gap-2">
+          <h1 className="text-2xl font-bold">{company}</h1>
           <h2 className="text-devops-secondary-darkGrey">{website}</h2>
         </div>
-        <button className="px-4 py-3 bg-devops-primary-lightViolet/20  w-fit rounded-md ml-auto mr-4">
-          <span className="text-devops-primary-violet font-semibold">
+        <button className="ml-auto mr-4 w-fit rounded-md bg-devops-primary-lightViolet/20 px-4 py-3">
+          <span className="font-semibold text-devops-primary-violet">
             Company Site
           </span>
         </button>
       </div>
-    </section>
+    </JobCompanyInfoLayout>
   );
 };
 
@@ -78,27 +79,29 @@ export const JobDescription: React.FC<IJobDescription> = async ({
   role,
 }) => {
   return (
-    <div className="p-4 bg-white w-4/5 flex flex-col rounded-md">
-      <div className="xs:flex xs:flex-col gap-4 md:flex-row  md:items-center md:justify-between">
-        <div className="flex flex-col gap-2 ">
+    <JobDescriptionLayout>
+      <div className="gap-4 xs:flex xs:flex-col md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-2">
           <h2 className="text-devops-secondary-gray">
             {postedAt} . {contract}
           </h2>
-          <h1 className="text-black font-bold text-xl">{position}</h1>
-          <h2 className="text-devops-primary-violet font-semibold">
+          <h1 className="text-xl font-bold">{position}</h1>
+          <h2 className="font-semibold text-devops-primary-violet">
             {location}
           </h2>
         </div>
-        <button className="px-4 py-3 bg-devops-primary-violet xs:w-full  md:w-fit  rounded-md xs:mt-12 md:mt-0">
-          <span className="text-white font-semibold">Company Site</span>
+        <button className="rounded-md bg-devops-primary-violet px-4 py-3 xs:mt-12 xs:w-full md:mt-0 md:w-fit">
+          <span className="font-semibold text-white">Company Site</span>
         </button>
       </div>
-      <div className="text-devops-secondary-darkGrey my-8 ">
-        <p>{description}</p>
+      <div className="my-8">
+        <p className="text-devops-secondary-darkGrey">{description}</p>
         <div className="mt-8 flex flex-col gap-8">
-          <h1 className="text-2xl font-bold text-black">Requirements</h1>
-          <p>{requirements.content}</p>
-          <ul className=" list-inside list-disc ml-6 flex flex-col gap-4 ">
+          <h1 className="text-2xl font-bold">Requirements</h1>
+          <p className="text-devops-secondary-darkGrey">
+            {requirements.content}
+          </p>
+          <ul className="ml-6 flex list-inside list-disc flex-col gap-4">
             {requirements.items.map((item, i) => (
               <li key={i} className="flex gap-8 text-devops-primary-violet">
                 <span className="text-devops-secondary-darkGrey">{item}</span>
@@ -107,12 +110,12 @@ export const JobDescription: React.FC<IJobDescription> = async ({
           </ul>
         </div>
         <div className="mt-8 flex flex-col gap-8">
-          <h1 className="text-2xl font-bold text-black">What You Will Do</h1>
-          <p>{role.content}</p>
+          <h1 className="text-2xl font-bold">What You Will Do</h1>
+          <p className="text-devops-secondary-darkGrey">{role.content}</p>
           <ol className="ml-4 flex flex-col gap-4">
             {role.items.map((item, i) => (
-              <li key={i} className="flex gap-4">
-                <span className=" text-devops-primary-violet font-bold">
+              <li key={i} className="flex gap-4 text-devops-secondary-darkGrey">
+                <span className="font-bold text-devops-primary-violet">
                   {i + 1}
                 </span>{" "}
                 <span>{item}</span>
@@ -121,6 +124,6 @@ export const JobDescription: React.FC<IJobDescription> = async ({
           </ol>
         </div>
       </div>
-    </div>
+    </JobDescriptionLayout>
   );
 };

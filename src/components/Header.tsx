@@ -7,7 +7,7 @@ import Image from "next/image";
 const Header = () => {
   return (
     <header>
-      <div className="xs:flex md:hidden xl:hidden  pb-8  px-8 text-4xl  items-center w-full aspect-[1/0.3] justify-between bg-[url('/assets/mobile/bg-pattern-header.svg')] bg-no-repeat bg-cover">
+      <div className="aspect-[1/0.3] w-full items-center justify-between bg-[url('/assets/mobile/bg-pattern-header.svg')] bg-cover bg-no-repeat px-8 pb-8 text-4xl xs:flex md:hidden xl:hidden">
         <span className="font-bold text-devops-secondary-white">devjobs</span>
 
         <div className="flex items-center gap-4">
@@ -20,7 +20,7 @@ const Header = () => {
           </span>
         </div>
       </div>
-      <div className=" xs:hidden md:flex xl:hidden  pb-8  px-8 text-4xl  items-center w-full md:aspect-[1/0.3] justify-between bg-[url('/assets/tablet/bg-pattern-header.svg')] bg-no-repeat bg-cover">
+      <div className="w-full items-center justify-between bg-[url('/assets/tablet/bg-pattern-header.svg')] bg-cover bg-no-repeat px-8 pb-8 text-4xl xs:hidden md:flex md:aspect-[1/0.2] xl:hidden">
         <span className="font-bold text-devops-secondary-white">devjobs</span>
 
         <div className="flex items-center gap-4">
@@ -33,7 +33,7 @@ const Header = () => {
           </span>
         </div>
       </div>
-      <div className="  xs:hidden md:hidden xl:flex  pb-8  px-8 text-4xl  items-center w-full md:w-full md:h-[10rem] justify-between bg-[url('/assets/desktop/bg-pattern-header.svg')] bg-no-repeat bg-cover">
+      <div className="w-full items-center justify-between bg-[url('/assets/desktop/bg-pattern-header.svg')] bg-cover bg-no-repeat px-8 pb-8 text-4xl xs:hidden md:hidden md:h-[12rem] md:w-full xl:flex">
         <span className="font-bold text-devops-secondary-white">devjobs</span>
 
         <div className="flex items-center gap-4">

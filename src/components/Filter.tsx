@@ -212,7 +212,7 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString }) => {
         <input
           type="text"
           placeholder="Filter by title,companies,expertise..."
-          className="w-full bg-transparent text-black outline-none"
+          className="w-full bg-transparent outline-none"
           ref={titleRef}
         />
       </div>
@@ -223,7 +223,7 @@ const FilterBig: React.FC<IFilter> = ({ handleQueryString }) => {
         <input
           type="text"
           placeholder="Filter by location..."
-          className="w-full bg-transparent text-black outline-none"
+          className="t w-full bg-transparent outline-none"
           ref={locationRef}
         />
       </div>
